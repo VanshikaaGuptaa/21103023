@@ -5,21 +5,27 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Function to register with the test server
-// const registerWithTestServer = async () => {
-//   try {
-//     const response = await axios.post('http://20.244.56.144/test/register', {
-//       companyName: 'goMart',
-//       ownerName: 'Vanshika',
-//       rollNo: '21103023',
-//       ownerEmail: 'vanshikag24003@gmail.com',
-//       accessCode: 'zpKKbc'
-//     });
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error registering with test server:', error);
-//     throw error;
-//   }
-// };
+const registerWithTestServer = async () => {
+    try {
+      const response = await axios.post('http://20.244.56.144/test/register', {
+        companyName: 'goMart',
+        ownerName: 'Vanshika',
+        rollNo: '21103023',
+        ownerEmail: 'vanshikag24003@gmail.com',
+        accessCode: 'zpKKbc'
+      });
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        console.log("ID is already registered. Displaying the output.");
+        // You can return the existing registration data or any other appropriate action here
+        // For example:
+        return error.response.data;
+      }
+      console.error('Error registering with test server:', error);
+      throw error;
+    }
+  };
 
 // Function to get authorization token
 const getAuthorizationToken = async () => {
@@ -29,7 +35,7 @@ const getAuthorizationToken = async () => {
       clientID: '37bb493c-7303-47ea-8675-21f66ef9b735',
       clientSecret: 'HVIQBVbq=TGEmaED',
       ownerName: 'Vanshika',
-      ownerEmail: 'vanshikag24003@gmail.com',
+      ownerEmail: 'vanshikag2403@gmail.com',
       rollNo: '21103023'
     });
     return response.data.access_token;
